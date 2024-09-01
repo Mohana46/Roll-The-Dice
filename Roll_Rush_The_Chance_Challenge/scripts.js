@@ -23,15 +23,18 @@ const rollDice = () => {
   if (!playing) return; // Don't roll if not playing
 
   const randomNumber = Math.trunc(Math.random() * 6) + 1;
-  const diceImage = ` dice-${randomNumber}.png`;
+  const diceImage = `dice-${randomNumber}.png`; // Removed extra space
   diceEl.classList.remove('hidden');
   diceEl.src = diceImage;
 
   if (randomNumber === 1) {
-    // If the player rolls a 1, they lose their current score and their turn ends
-    players[currentPlayer].currentScore = 0;
-    players[currentPlayer].turnCount = 0;
-    switchPlayer();
+    // If the player rolls a 1, display the dice and wait 10 seconds before changing the player
+    setTimeout(() => {
+      players[currentPlayer].currentScore = 0;
+      players[currentPlayer].turnCount = 0;
+      switchPlayer();
+      updateScores();
+    }, 10000); // 10000 milliseconds = 10 seconds
   } else {
     // If the player rolls anything other than 1
     if (players[currentPlayer].turnCount < 3) {
@@ -45,9 +48,9 @@ const rollDice = () => {
       checkWinner();
       switchPlayer();
     }
-  }
 
-  updateScores();
+    updateScores();
+  }
 };
 
 // const rollDice = () => {
