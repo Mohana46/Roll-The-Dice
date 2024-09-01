@@ -18,27 +18,12 @@ diceEl.classList.add('hidden');
 
 let playing = true; // New variable to control gameplay
 
-const preloadImages = (imageUrls) => {
-  imageUrls.forEach(url => {
-    const img = new Image();
-    img.src = url;
-  });
-};
 
-// Call this function on page load
-preloadImages([
-  'dice-1.png',
-  'dice-2.png',
-  'dice-3.png',
-  'dice-4.png',
-  'dice-5.png',
-  'dice-6.png'
-]);
 const rollDice = () => {
   if (!playing) return; // Don't roll if not playing
 
   const randomNumber = Math.trunc(Math.random() * 6) + 1;
-  const diceImage = `dice dice-${randomNumber}.png`;
+  const diceImage = ` dice-${randomNumber}.png`;
   diceEl.classList.remove('hidden');
   diceEl.src = diceImage;
 
