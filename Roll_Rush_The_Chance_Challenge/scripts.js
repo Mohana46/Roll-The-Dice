@@ -17,7 +17,6 @@ const diceEl = document.querySelector(".dice");
 diceEl.classList.add('hidden');
 
 let playing = true; // New variable to control gameplay
-
 const rollDice = () => {
   if (!playing) return; // Don't roll if not playing
 
@@ -26,21 +25,52 @@ const rollDice = () => {
   diceEl.classList.remove('hidden');
   diceEl.src = diceImage;
 
-  if (players[currentPlayer].turnCount < 3) {
-    players[currentPlayer].currentScore += randomNumber;
-    players[currentPlayer].turnCount++;
-  } else {
-    players[currentPlayer].score += players[currentPlayer].currentScore;
+  if (randomNumber === 1) {
+    // If the player rolls a 1, they lose their current score and their turn ends
     players[currentPlayer].currentScore = 0;
     players[currentPlayer].turnCount = 0;
-
-    updateScores();
-    checkWinner();
     switchPlayer();
+  } else {
+    // If the player rolls anything other than 1
+    if (players[currentPlayer].turnCount < 3) {
+      players[currentPlayer].currentScore += randomNumber;
+      players[currentPlayer].turnCount++;
+    } else {
+      players[currentPlayer].score += players[currentPlayer].currentScore;
+      players[currentPlayer].currentScore = 0;
+      players[currentPlayer].turnCount = 0;
+
+      checkWinner();
+      switchPlayer();
+    }
   }
 
   updateScores();
 };
+
+// const rollDice = () => {
+//   if (!playing) return; // Don't roll if not playing
+
+//   const randomNumber = Math.trunc(Math.random() * 6) + 1;
+//   const diceImage = `dice-${randomNumber}.png`;
+//   diceEl.classList.remove('hidden');
+//   diceEl.src = diceImage;
+
+//   if (players[currentPlayer].turnCount < 3) {
+//     players[currentPlayer].currentScore += randomNumber;
+//     players[currentPlayer].turnCount++;
+//   } else {
+//     players[currentPlayer].score += players[currentPlayer].currentScore;
+//     players[currentPlayer].currentScore = 0;
+//     players[currentPlayer].turnCount = 0;
+
+//     updateScores();
+//     checkWinner();
+//     switchPlayer();
+//   }
+
+//   updateScores();
+// };
 
 const updateScores = () => {
   document.querySelector("#name--0").textContent = players[0].name;
